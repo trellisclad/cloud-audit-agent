@@ -13,9 +13,25 @@
       "types": "./dist/agent.d.ts",
       "import": "./dist/agent.js"
     },
+    "./aws": {
+      "types": "./dist/aws/client.d.ts",
+      "import": "./dist/aws/client.js"
+    },
     "./tools": {
       "types": "./dist/tools/index.d.ts",
       "import": "./dist/tools/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/findings.d.ts",
+      "import": "./dist/types/findings.js"
+    },
+    "./report": {
+      "types": "./dist/report/formatter.d.ts",
+      "import": "./dist/report/formatter.js"
+    },
+    "./tracing": {
+      "types": "./dist/tracing.d.ts",
+      "import": "./dist/tracing.js"
     }
   },
   "scripts": {
