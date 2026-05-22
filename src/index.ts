@@ -2,6 +2,7 @@
 import { Command } from "commander";
 import { runAudit } from "./agent.js";
 import { verifyAwsCredentials } from "./aws/client.js";
+import { formatOutput, type OutputFormat } from "./report/human-formatter.js";
 import type { AuditScope } from "./types/findings.js";
 
 const program = new Command();
@@ -19,6 +20,7 @@ program
   )
   .option("-m, --model <model>", "Claude model to use")
   .option("--max-turns <number>", "Maximum agent turns", "30")
+  .option("-f, --format <format>", "Output format: markdown, human, html, json", "markdown")
   .option("--trace", "Enable Phoenix tracing", false)
   .action(async (opts) => {
     const scopes = opts.scope as AuditScope[];
@@ -65,7 +67,14 @@ program
         accountId,
       });
 
-      console.log(result.markdown);
+      const output = formatOutput(opts.format as OutputFormat, result.markdown, {
+        costUsd: result.costUsd,
+        durationMs: result.durationMs,
+        numTurns: result.numTurns,
+        inputTokens: result.inputTokens,
+        outputTokens: result.outputTokens,
+      });
+      console.log(output);
     } catch (error) {
       console.error(`\n  Error: ${(error as Error).message}`);
       process.exit(1);
