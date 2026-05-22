@@ -155,6 +155,7 @@ export async function runAudit(options: AgentOptions): Promise<AuditResult> {
           env,
           ...(model ? { model } : {}),
           tools: [],
+          settingSources: [],
           permissionMode: "bypassPermissions",
           allowDangerouslySkipPermissions: true,
         },
