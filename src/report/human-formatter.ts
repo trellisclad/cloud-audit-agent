@@ -1,4 +1,5 @@
 import { markdownToJson, stripJsonBlock } from "./formatter.js";
+import { redactReport } from "./redact.js";
 import type { Finding, Severity } from "../types/findings.js";
 
 export type OutputFormat = "markdown" | "human" | "json" | "html";
@@ -291,23 +292,32 @@ export function formatHumanReport(markdown: string, metadata?: FormatMetadata): 
   return sections.join("\n") + footer;
 }
 
+export interface FormatOutputOptions {
+  format: OutputFormat;
+  markdown: string;
+  metadata?: FormatMetadata;
+  redact?: boolean;
+}
+
 export function formatOutput(
   format: OutputFormat,
   markdown: string,
   metadata?: FormatMetadata,
+  redact?: boolean,
 ): string {
+  const md = redact ? redactReport(markdown) : markdown;
   switch (format) {
     case "markdown":
-      return markdown;
+      return md;
 
     case "human":
-      return formatHumanReport(markdown, metadata);
+      return formatHumanReport(md, metadata);
 
     case "html":
-      return formatHtmlReport(markdown, metadata);
+      return formatHtmlReport(md, metadata);
 
     case "json": {
-      const report = markdownToJson(markdown);
+      const report = markdownToJson(md);
       const output = metadata
         ? { ...report, metadata }
         : report;

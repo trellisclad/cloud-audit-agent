@@ -145,3 +145,4 @@ function extractJsonBlock(text: string): AuditReport | null {
 }
 
 export { formatOutput, formatHumanReport, formatHtmlReport, type OutputFormat, type FormatMetadata } from "./human-formatter.js";
+export { redactReport, redactAuditReport } from "./redact.js";

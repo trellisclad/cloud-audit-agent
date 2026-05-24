@@ -52,9 +52,52 @@ cloud-audit-agent --scope all
 | `-s, --scope <scopes...>` | Audit scopes: `iam`, `s3`, `ec2`, `cost`, `compliance`, `all` | `all` |
 | `-r, --region <region>` | AWS region to audit | `us-east-1` |
 | `-p, --profile <profile>` | AWS CLI profile to use | default |
+| `-f, --format <format>` | Output format: `markdown`, `human`, `html`, `json` | `markdown` |
 | `-m, --model <model>` | Claude model to use | auto |
 | `--max-turns <number>` | Maximum agent turns | auto-computed |
+| `--redact` | Redact sensitive data (account IDs, resource names, ARNs) | `false` |
 | `--trace` | Enable Phoenix tracing | `false` |
+
+## Output Formats
+
+The `--format` flag controls how the audit report is rendered.
+
+### Markdown (default)
+
+Raw markdown output from the agent, including the structured JSON findings block at the end. Best for piping into other tools or saving as `.md` files.
+
+```bash
+cloud-audit-agent --scope all > report.md
+```
+
+### Human
+
+Clean, terminal-friendly report with findings grouped by severity. Strips the raw JSON block and adds scannable labels, resource identifiers, and a metadata footer.
+
+```bash
+cloud-audit-agent --scope all --format human
+```
+
+### HTML
+
+Self-contained styled HTML report with color-coded severity badges, properly rendered tables, and a metadata footer. Open directly in a browser.
+
+```bash
+cloud-audit-agent --scope s3 --format html > report.html
+open report.html
+```
+
+### JSON
+
+Structured `AuditReport` object with parsed findings, severity/domain summaries, and audit metadata. Useful for programmatic consumption.
+
+```bash
+# Pipe to jq
+cloud-audit-agent --scope iam --format json | jq '.findings[] | select(.severity == "CRITICAL")'
+
+# Save for processing
+cloud-audit-agent --scope all --format json > audit.json
+```
 
 ## Audit Scopes
 

@@ -21,6 +21,7 @@ program
   .option("-m, --model <model>", "Claude model to use")
   .option("--max-turns <number>", "Maximum agent turns", "30")
   .option("-f, --format <format>", "Output format: markdown, human, html, json", "markdown")
+  .option("--redact", "Redact sensitive data (account IDs, resource names, ARNs)", false)
   .option("--trace", "Enable Phoenix tracing", false)
   .action(async (opts) => {
     const scopes = opts.scope as AuditScope[];
@@ -73,7 +74,7 @@ program
         numTurns: result.numTurns,
         inputTokens: result.inputTokens,
         outputTokens: result.outputTokens,
-      });
+      }, opts.redact);
       console.log(output);
     } catch (error) {
       console.error(`\n  Error: ${(error as Error).message}`);
