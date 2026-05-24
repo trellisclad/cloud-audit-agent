@@ -19,10 +19,49 @@ The agent uses read-only AWS API calls to scan your account, then applies Claude
 ### Prerequisites
 
 - Node.js 18+
-- AWS credentials configured (via `~/.aws/credentials`, environment variables, or IAM role)
-- Claude authentication (Claude Max plan, Anthropic API key, or AWS Bedrock)
 
-### Run with npx
+### 1. Set up Claude authentication
+
+The agent uses Claude to reason over your AWS data. Choose one of:
+
+**Claude Max plan (recommended)** — no API key needed:
+```bash
+claude auth login
+```
+
+**Anthropic API key** — if you have separate API credits:
+```bash
+export ANTHROPIC_API_KEY=sk-ant-...
+```
+
+**AWS Bedrock** — routes LLM calls through your AWS account so data stays in your VPC:
+```bash
+export CLAUDE_CODE_USE_BEDROCK=1
+```
+
+### 2. Configure AWS credentials
+
+The agent needs read-only access to your AWS account. Choose one of:
+
+**AWS CLI profile (most common):**
+```bash
+aws configure
+# or use a named profile
+aws configure --profile production
+```
+
+**Environment variables:**
+```bash
+export AWS_ACCESS_KEY_ID=AKIA...
+export AWS_SECRET_ACCESS_KEY=...
+export AWS_REGION=us-east-1
+```
+
+**IAM role** — works automatically on EC2, ECS, and Lambda with no extra configuration.
+
+The agent only needs read-only permissions. See [AWS Permissions](#aws-permissions) for the required policies.
+
+### 3. Run with npx
 
 ```bash
 # Full audit
