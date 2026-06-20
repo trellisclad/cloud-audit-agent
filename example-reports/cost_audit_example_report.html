@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWS Audit Report - Uses random figures as example</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 24px; color: #1e293b; line-height: 1.6; }
+    h1 { font-size: 24px; margin-bottom: 4px; }
+    h2 { font-size: 18px; color: #334155; }
+    h3 { font-size: 16px; }
+    code { background: #f1f5f9; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    th, td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; font-size: 14px; }
+    th { background: #f8fafc; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div style="margin-bottom:24px;">
+    <h1>AWS Security & Cost Audit Report - Uses random figures as example</h1>
+<br>
+<p style="margin:4px 0;"><strong>Account:</strong> 111-01</p>
+<p style="margin:4px 0;"><strong>Date:</strong> 2026-05-24</p>
+<p style="margin:4px 0;"><strong>Region:</strong> us-east-1</p>
+<p style="margin:4px 0;"><strong>Scopes Audited:</strong> Cost</p>
+<br>
+<h2 style="margin-top:24px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;">Executive Summary</h2>
+<p style="margin:4px 0;">The account shows cost activity only in May 2026 (current month-to-date), with March and April reporting $0. Month-to-date spend is approximately <strong>$3,388</strong> across 23 services, dominated by EC2 Compute ($1,041), EC2-Other/EBS+NAT ($899), and RDS ($586). Spend is concentrated in the EU (London — EUW2) region despite the audit being scoped to us-east-1, suggesting workloads may be running outside the intended region. Significant optimization potential exists in idle/oversized EBS gp3 volumes, NAT Gateway data transfer, Aurora backup retention, and Secrets Manager secret count. Estimated savings potential: <strong>$400–$700/month</strong> through right-sizing, cleanup, and Savings Plans/Reserved Instances.</p>
+<br>
+<h2 style="margin-top:24px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;">Monthly Spend Summary</h2>
+<br>
+<table><thead><tr><th>Service</th><th>Mar 2026</th><th>Apr 2026</th><th>May 2026 (MTD)</th></tr></thead><tbody><tr><td>Amazon EC2 - Compute</td><td>$0.00</td><td>$0.00</td><td><strong>$1,041.21</strong></td></tr><tr><td>└─ EUW2-BoxUsage:m6i.xlarge</td><td></td><td></td><td>$360.73</td></tr><tr><td>└─ EU-BoxUsage:r7i.large</td><td></td><td></td><td>$195.59</td></tr><tr><td>└─ EUW2-BoxUsage:m6i.2xlarge</td><td></td><td></td><td>$94.29</td></tr><tr><td>└─ APS2-BoxUsage:r8g.large</td><td></td><td></td><td>$76.46</td></tr><tr><td>└─ BoxUsage:r7i.large</td><td></td><td></td><td>$71.66</td></tr><tr><td>└─ EU-BoxUsage:r8g.large</td><td></td><td></td><td>$71.44</td></tr><tr><td>└─ APS3-BoxUsage:m6i.xlarge</td><td></td><td></td><td>$53.70</td></tr><tr><td>└─ Other (38 types)</td><td></td><td></td><td>$117.34</td></tr><tr><td>EC2 - Other</td><td>$0.00</td><td>$0.00</td><td><strong>$898.76</strong></td></tr><tr><td>└─ EU-EBS:VolumeUsage.gp3</td><td></td><td></td><td>$252.76</td></tr><tr><td>└─ EUW2-EBS:VolumeUsage.gp3</td><td></td><td></td><td>$189.12</td></tr><tr><td>└─ APS3-EBS:VolumeUsage.gp3</td><td></td><td></td><td>$100.99</td></tr><tr><td>└─ EUW2-NatGateway-Hours</td><td></td><td></td><td>$81.30</td></tr><tr><td>└─ EUW2-DataTransfer-Regional-Bytes</td><td></td><td></td><td>$73.71</td></tr><tr><td>└─ EUW3-EBS:VolumeUsage.gp3</td><td></td><td></td><td>$64.90</td></tr><tr><td>└─ EUW2-EBS:VolumeUsage.gp2</td><td></td><td></td><td>$45.63</td></tr><tr><td>└─ Other (153 types)</td><td></td><td></td><td>$90.35</td></tr><tr><td>Amazon RDS</td><td>$0.00</td><td>$0.00</td><td><strong>$585.98</strong></td></tr><tr><td>└─ EUW2-InstanceUsage:db.r6g.large</td><td></td><td></td><td>$245.68</td></tr><tr><td>└─ EUW2-Aurora:BackupUsage</td><td></td><td></td><td>$184.79</td></tr><tr><td>└─ EUW2-Aurora:StorageUsage</td><td></td><td></td><td>$78.73</td></tr><tr><td>└─ EUW2-InstanceUsage:db.t4g.large</td><td></td><td></td><td>$38.66</td></tr><tr><td>└─ Other (9 types)</td><td></td><td></td><td>$38.12</td></tr><tr><td>Amazon S3</td><td>$0.00</td><td>$0.00</td><td>$172.74</td></tr><tr><td>AmazonCloudWatch</td><td>$0.00</td><td>$0.00</td><td>$108.18</td></tr><tr><td>Amazon ElastiCache</td><td>$0.00</td><td>$0.00</td><td>$78.16</td></tr><tr><td>Amazon VPC</td><td>$0.00</td><td>$0.00</td><td>$71.22</td></tr><tr><td>Amazon ELB</td><td>$0.00</td><td>$0.00</td><td>$70.66</td></tr><tr><td>AWS Secrets Manager</td><td>$0.00</td><td>$0.00</td><td>$55.81</td></tr><tr><td>Amazon EKS</td><td>$0.00</td><td>$0.00</td><td>$54.20</td></tr><tr><td>Amazon GuardDuty</td><td>$0.00</td><td>$0.00</td><td>$30.34</td></tr><tr><td>AWS Security Hub</td><td>$0.00</td><td>$0.00</td><td>$23.47</td></tr><tr><td>AWS KMS</td><td>$0.00</td><td>$0.00</td><td>$16.70</td></tr><tr><td>AWS Config</td><td>$0.00</td><td>$0.00</td><td>$6.11</td></tr><tr><td>AWS Cost Explorer</td><td>$0.00</td><td>$0.00</td><td>$0.69</td></tr><tr><td>Other services</td><td>$0.00</td><td>$0.00</td><td><$0.10</td></tr><tr><td><strong>Total</strong></td><td><strong>$0.00</strong></td><td><strong>$0.00</strong></td><td><strong>~$3,388</strong></td></tr></tbody></table>
+<br>
+<h2 style="margin-top:24px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;">Anomaly Summary</h2>
+<li>EC2 Compute: ↑ $1,041 (new spend); daily spikes 2026-05-02 ($78.66, 2.7σ) and 2026-05-03 ($80.83, 2.9σ)</li>
+<li>EC2 - Other (EBS/NAT): ↑ $898.76 (new spend)</li>
+<li>RDS: ↑ $585.98 (new spend); daily spikes 2026-05-02 ($47.99, 2.4σ) and 2026-05-03 ($48.45, 2.5σ)</li>
+<li>S3: ↑ $172.74 (new spend)</li>
+<li>CloudWatch: ↑ $108.18 (new spend)</li>
+<li>8 additional trend anomalies between $16–$78 (ElastiCache, VPC, ELB, Secrets Manager, EKS, GuardDuty, Security Hub, KMS)</li>
+<br>
+<h2 style="margin-top:24px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;">30-Day Forecast</h2>
+<p style="margin:4px 0;">Cost Explorer returned "Insufficient amount of historical data." Linear extrapolation from MTD (~$3,388 over 23 days) projects approximately <strong>$4,420/month</strong> at current burn.</p>
+<br>
+<h2 style="margin-top:24px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;">Findings Count</h2>
+<p style="margin:4px 0;">CRITICAL: 0 | HIGH: 2 | MEDIUM: 6 | LOW: 3 | INFO: 2</p>
+  </div>
+
+  
+  <div style="margin:20px 0;">
+    <span style="background:#ea580c; color:#fff; padding:4px 12px; border-radius:4px; font-size:13px; font-weight:600; margin-right:6px;">HIGH: 2</span> <span style="background:#ca8a04; color:#fff; padding:4px 12px; border-radius:4px; font-size:13px; font-weight:600; margin-right:6px;">MEDIUM: 6</span> <span style="background:#2563eb; color:#fff; padding:4px 12px; border-radius:4px; font-size:13px; font-weight:600; margin-right:6px;">LOW: 3</span> <span style="background:#6b7280; color:#fff; padding:4px 12px; border-radius:4px; font-size:13px; font-weight:600; margin-right:6px;">INFO: 2</span>
+  </div>
+
+  <h2 style="margin-top:32px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">Findings (13 total)</h2>
+  
+    <div style="margin-top:24px;">
+      <h3 style="color:#ea580c; border-bottom:2px solid #ea580c; padding-bottom:6px;">HIGH (2)</h3>
+      
+    <div style="border-left:4px solid #ea580c; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ea580c; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">HIGH</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-1</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Workloads concentrated in non-target regions (EUW2, EU, APS2, APS3, EUW3)</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>Account 111-01 (regions eu-west-1, eu-west-2, eu-west-3, ap-southeast-2, ap-southeast-3)</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">Although the audit is scoped to us-east-1, nearly all spend originates in eu-west-2 (London), eu-west-1 (Ireland), eu-west-3 (Paris), ap-southeast-2 (Sydney), and ap-southeast-3 (Jakarta). EUW2 alone drives EC2, EBS, NAT, and the entire RDS spend. This indicates either an intentional multi-region deployment whose costs are not being monitored in the home region, or unintended workloads running outside the approved region. Unmonitored regions are a common source of forgotten resources and shadow IT.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Confirm that all active regions are intentional and governed. Establish region allow-lists via Service Control Policies in AWS Organizations, enable Cost Allocation Tags and per-region budgets, and route region-specific audits accordingly. Inventory resources in each non-home region and decommission anything not required for production.
+      </div>
+    </div>
+    <div style="border-left:4px solid #ea580c; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ea580c; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">HIGH</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-2</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Large EBS gp3/gp2 spend with potential idle and legacy volumes</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>EBS volumes across eu-west-1, eu-west-2, eu-west-3, ap-southeast-2, ap-southeast-3</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">EBS volume usage totals approximately $725 month-to-date across EU and APS regions, with EUW2 gp2 volumes alone costing $45.63. gp2 is a legacy volume type that is more expensive per IOPS than gp3 in nearly every workload profile. Large gp3 spend without correlated EC2 hours can also indicate unattached or oversized volumes left behind by terminated instances.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Identify all unattached EBS volumes and snapshots older than retention policy and remove them. Migrate remaining gp2 volumes to gp3 to reduce cost by roughly 20 percent at equal performance. Right-size volume capacity and provisioned IOPS based on CloudWatch metrics, and enable AWS Compute Optimizer EBS recommendations.
+      </div>
+    </div>
+    </div>
+    <div style="margin-top:24px;">
+      <h3 style="color:#ca8a04; border-bottom:2px solid #ca8a04; padding-bottom:6px;">MEDIUM (6)</h3>
+      
+    <div style="border-left:4px solid #ca8a04; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ca8a04; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">MEDIUM</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-3</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">NAT Gateway hours and regional data transfer are a significant cost driver</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>NAT Gateways and VPCs in eu-west-2</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">EUW2 NAT Gateway hours total $81.30 and EUW2 regional data transfer is $73.71 month-to-date, together exceeding $155. NAT Gateway cost grows with both uptime and data processed; high regional transfer alongside it often points to chatty cross-AZ traffic or services without VPC endpoints reaching AWS APIs through NAT.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Add VPC interface and gateway endpoints for S3, DynamoDB, ECR, STS, KMS, Secrets Manager, and CloudWatch Logs to bypass NAT Gateway for AWS API traffic. Audit cross-AZ communication and co-locate chatty workloads. Consider consolidating redundant NAT Gateways where availability requirements permit.
+      </div>
+    </div>
+    <div style="border-left:4px solid #ca8a04; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ca8a04; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">MEDIUM</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-4</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Aurora backup storage cost exceeds primary storage cost</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>Aurora cluster(s) in eu-west-2</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">EUW2 Aurora BackupUsage totals $184.79 versus Aurora StorageUsage of $78.73 month-to-date. Backup storage costing more than 2x primary storage typically indicates excessive backup retention windows, accumulated manual snapshots, or cross-region copies that are no longer needed.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Review the Aurora automated backup retention period and reduce it to the minimum that satisfies recovery objectives. Delete obsolete manual cluster snapshots, prune cross-region backup copies, and document a backup lifecycle policy. Consider AWS Backup with cold storage tiering for long-term retention.
+      </div>
+    </div>
+    <div style="border-left:4px solid #ca8a04; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ca8a04; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">MEDIUM</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-5</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">EC2 on-demand spend with no Savings Plans or Reserved Instance coverage observed</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>EC2 instances across eu-west-2, eu-west-1, ap-southeast-2, ap-southeast-3</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">EC2 compute spend is dominated by on-demand box usage of m6i.xlarge, m6i.2xlarge, r7i.large, and r8g.large totaling over $900 month-to-date. No Savings Plan or RI line items appear in the breakdown. Steady-state workloads at this scale typically benefit from 20 to 50 percent savings via Compute Savings Plans.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Review AWS Cost Explorer Savings Plans and RI recommendations. Purchase a 1-year no-upfront Compute Savings Plan sized to baseline steady-state usage. Maintain on-demand for variable workloads. Re-evaluate coverage monthly and consider 3-year terms for proven long-lived workloads.
+      </div>
+    </div>
+    <div style="border-left:4px solid #ca8a04; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ca8a04; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">MEDIUM</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-6</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Daily cost spikes on May 2-3 across EC2 and RDS</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>EC2 and RDS across primary regions on 2026-05-02 and 2026-05-03</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">Statistical analysis detected daily spikes of 2.7 and 2.9 standard deviations on EC2 Compute ($78.66 and $80.83 vs $45.27 daily mean) and 2.4 and 2.5 standard deviations on RDS ($47.99 and $48.45 vs $25.48 daily mean) on 2026-05-02 and 2026-05-03. Coincident EC2 and RDS spikes typically indicate a deploy, load test, autoscaling event, or batch job that may have left resources running.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Correlate the spike dates with CloudTrail RunInstances and ModifyDBInstance events, application deploy logs, and Auto Scaling activity. Confirm any scaled-up resources have scaled back down. Add AWS Budgets alerts at daily thresholds and CloudWatch alarms on cost metrics to catch similar spikes earlier.
+      </div>
+    </div>
+    <div style="border-left:4px solid #ca8a04; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ca8a04; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">MEDIUM</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-7</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Secrets Manager spend implies a high secret count</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>AWS Secrets Manager in active regions</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">AWS Secrets Manager month-to-date cost is $55.81. At $0.40 per secret per month, this corresponds to roughly 140 active secrets. Large secret inventories often include stale secrets from decommissioned applications, duplicate copies across environments, and unused rotation configurations.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Inventory all secrets and tag by owner, environment, and last-accessed date. Remove secrets unused for 90 days. Consolidate duplicates across environments where appropriate. For low-sensitivity configuration values, consider SSM Parameter Store standard parameters which are free.
+      </div>
+    </div>
+    <div style="border-left:4px solid #ca8a04; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ca8a04; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">MEDIUM</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-8</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">CloudWatch spend at $108 month-to-date warrants log retention review</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>CloudWatch Logs and Metrics across active regions</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">CloudWatch costs of $108.18 MTD often grow from unbounded log ingestion, infinite log group retention, high-resolution custom metrics, and excessive cross-region log replication. Without retention policies, CloudWatch Logs storage costs accumulate indefinitely.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Set explicit retention on every log group based on compliance need, typically 30 to 90 days for application logs. Identify the top log groups by ingestion and apply subscription filters or sampling. Move long-term log archives to S3 with Intelligent-Tiering. Audit custom metric publishers for unnecessarily high resolution.
+      </div>
+    </div>
+    </div>
+    <div style="margin-top:24px;">
+      <h3 style="color:#2563eb; border-bottom:2px solid #2563eb; padding-bottom:6px;">LOW (3)</h3>
+      
+    <div style="border-left:4px solid #2563eb; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#2563eb; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">LOW</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-9</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">ElastiCache cluster cost without visibility into utilization</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>ElastiCache cluster(s) in active regions</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">ElastiCache spend of $78.16 MTD indicates at least one always-on cluster. Without utilization data, it is unclear whether the node type is right-sized and whether reserved nodes are appropriate.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Review CPU, memory, evictions, and network metrics over a 14-day window. Right-size node type if utilization is consistently below 40 percent, and purchase reserved nodes for steady-state workloads. Consider Serverless ElastiCache for variable patterns.
+      </div>
+    </div>
+    <div style="border-left:4px solid #2563eb; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#2563eb; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">LOW</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-10</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">S3 spend of $172.74 month-to-date without observed lifecycle policies</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>S3 buckets across active regions</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">S3 costs at this level commonly include legacy buckets without lifecycle policies, incomplete multipart uploads, non-current object versions on versioned buckets, and objects stored in Standard that could be in Intelligent-Tiering or Glacier.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Enable S3 Storage Lens to identify cost concentrations. Apply lifecycle rules to transition objects to Intelligent-Tiering, abort multipart uploads after 7 days, and expire non-current versions after a defined window. Review Requester Pays and replication configurations for waste.
+      </div>
+    </div>
+    <div style="border-left:4px solid #2563eb; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#2563eb; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">LOW</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-11</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">AWS Cost Explorer forecast unavailable due to insufficient history</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>Account 111-01 Cost Explorer</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">The forecast API returned an insufficient-history error, consistent with cost data only appearing in May 2026. This may reflect a new account, recently re-enabled billing, recent AWS Organizations migration, or a data lag. Forecasting accuracy and anomaly baselines will improve as history accumulates.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Confirm whether this is a newly activated account. Enable Cost Explorer, Cost Anomaly Detection, AWS Budgets with email alerts, and Cost and Usage Reports to S3 for long-term analysis. Revisit forecasting after 60 days of data.
+      </div>
+    </div>
+    </div>
+    <div style="margin-top:24px;">
+      <h3 style="color:#6b7280; border-bottom:2px solid #6b7280; padding-bottom:6px;">INFO (2)</h3>
+      
+    <div style="border-left:4px solid #6b7280; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#6b7280; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">INFO</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-12</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Security tooling spend totals ~$76 MTD</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>GuardDuty, Security Hub, Config, KMS across active regions</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">GuardDuty ($30.34), Security Hub ($23.47), Config ($6.11), and KMS ($16.70) total approximately $76 month-to-date. These are security baselines and the spend is generally appropriate, but Config recorder scope and Security Hub controls can be tuned to reduce noise and cost without weakening posture.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Confirm Config recorder is not recording global resources in every region (record globals only in home region). Disable Security Hub controls not relevant to the workload. Review KMS request volume for opportunities to cache data keys in applications. Keep GuardDuty fully enabled.
+      </div>
+    </div>
+    <div style="border-left:4px solid #6b7280; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#6b7280; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">INFO</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-13</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">No budgets or anomaly subscriptions visible in cost data</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>Account 111-01</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">There is no indication in the cost stream that AWS Budgets or Cost Anomaly Detection subscriptions are configured to email stakeholders. Given the recent appearance of spend and the multi-region footprint, lack of proactive alerts increases the time-to-detect for future cost regressions.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Create AWS Budgets with monthly and daily thresholds at 50, 80, and 100 percent of expected spend, and configure SNS or email notifications. Subscribe to AWS Cost Anomaly Detection with per-service and per-linked-account monitors. Document an owner for cost alerts.
+      </div>
+    </div>
+    </div>
+
+  
+  <div style="margin-top:32px; padding:12px 16px; background:#f8fafc; border-top:1px solid #e2e8f0; font-size:13px; color:#64748b;">
+    Cost: $0.2655 &middot; Duration: 108.8s &middot; Turns: 7 &middot; Tokens: 672 in / 7,238 out
+  </div>
+
+  <div style="margin-top:24px; text-align:center; font-size:12px; color:#94a3b8;">
+    Generated by <a href="https://github.com/trellisclad/cloud-audit-agent" style="color:#64748b;">cloud-audit-agent</a>
+  </div>
+</body>
+</html>

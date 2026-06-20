@@ -1,0 +1,245 @@
+
+> @trellisclad/cloud-audit-agent@0.1.0 dev
+> tsx src/index.ts --scope s3 --region eu-west-1 --format html --redact
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWS Audit Report — eu-west-1</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 24px; color: #1e293b; line-height: 1.6; }
+    h1 { font-size: 24px; margin-bottom: 4px; }
+    h2 { font-size: 18px; color: #334155; }
+    h3 { font-size: 16px; }
+    code { background: #f1f5f9; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    th, td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; font-size: 14px; }
+    th { background: #f8fafc; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div style="margin-bottom:24px;">
+    <h1>AWS Security & Cost Audit Report</h1>
+<br>
+<p style="margin:4px 0;"><strong>Account:</strong> 111-01</p>
+<p style="margin:4px 0;"><strong>Date:</strong> 2026-05-22</p>
+<p style="margin:4px 0;"><strong>Region:</strong> eu-west-1 (audit scope includes buckets in other regions returned by global S3 list)</p>
+<p style="margin:4px 0;"><strong>Scopes Audited:</strong> S3 (public access, encryption, bucket web-assets-01, per-bucket web-assets-02 cost)</p>
+<br>
+<h2 style="margin-top:24px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;">Executive Summary</h2>
+<p style="margin:4px 0;">Of the 43 S3 buckets in the account, <strong>31 (72%) carry security risks</strong> — predominantly missing public access blocks and disabled server-side encryption. One bucket (`web-assets-03`) has a confirmed public bucket web-assets-01 allowing anonymous `s3:GetObject` to any object, exposing ~44 GB of mainnet snapshot web-assets-27. Several sensitive buckets (DB secrets backups, vault backups, CloudTrail/log destinations, IaC state, RDS exports) lack encryption and/or full public-access blocking. Total estimated monthly web-assets-02 spend across reported buckets is <strong>~$183.23</strong>, dominated by two ledger backup buckets (`web-assets-45` $129.21 and `web-assets-46` $51.05) — opportunities exist to move these to Glacier Instant Retrieval or Glacier Flexible Retrieval to reduce cost by an estimated 60–80%.</p>
+<br>
+<h2 style="margin-top:24px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;">Monthly Spend Summary</h2>
+<br>
+<table><thead><tr><th>Service</th><th>May 2026</th></tr></thead><tbody><tr><td>S3 Storage (all buckets, estimated)</td><td>$183.23</td></tr><tr><td><strong>Total</strong></td><td><strong>$183.23</strong></td></tr></tbody></table>
+<br>
+<p style="margin:4px 0;">Top contributors:</p>
+<table><thead><tr><th>Bucket</th><th>Region</th><th>Monthly Cost</th></tr></thead><tbody><tr><td>web-assets-45</td><td>eu-west-1</td><td>$129.21</td></tr><tr><td>web-assets-46</td><td>eu-west-1</td><td>$51.05</td></tr><tr><td>aws-cloudtrail-logs-111-01-c130a9d5</td><td>eu-west-1</td><td>$1.54</td></tr><tr><td>web-assets-03</td><td>eu-west-1</td><td>$1.05</td></tr><tr><td>web-assets-43</td><td>eu-west-1</td><td>$0.19</td></tr></tbody></table>
+<br>
+<h2 style="margin-top:24px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;">Anomaly Summary</h2>
+<li>S3 web-assets-02 concentration: 98% of cost driven by 2 buckets (ledger backups) — candidates for tiering.</li>
+<li>No month-over-month anomaly web-assets-27 available from S3 scope alone.</li>
+<br>
+<h2 style="margin-top:24px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;">30-Day Forecast</h2>
+<p style="margin:4px 0;">Projected S3 web-assets-02 spend (next 30 days): <strong>~$183</strong>, assuming current growth pattern.</p>
+<br>
+<h2 style="margin-top:24px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;">Findings Count</h2>
+<p style="margin:4px 0;">CRITICAL: 1 | HIGH: 6 | MEDIUM: 3 | LOW: 2 | INFO: 1</p>
+  </div>
+
+  
+  <div style="margin:20px 0;">
+    <span style="background:#dc2626; color:#fff; padding:4px 12px; border-radius:4px; font-size:13px; font-weight:600; margin-right:6px;">CRITICAL: 1</span> <span style="background:#ea580c; color:#fff; padding:4px 12px; border-radius:4px; font-size:13px; font-weight:600; margin-right:6px;">HIGH: 6</span> <span style="background:#ca8a04; color:#fff; padding:4px 12px; border-radius:4px; font-size:13px; font-weight:600; margin-right:6px;">MEDIUM: 3</span> <span style="background:#2563eb; color:#fff; padding:4px 12px; border-radius:4px; font-size:13px; font-weight:600; margin-right:6px;">LOW: 2</span> <span style="background:#6b7280; color:#fff; padding:4px 12px; border-radius:4px; font-size:13px; font-weight:600; margin-right:6px;">INFO: 1</span>
+  </div>
+
+  <h2 style="margin-top:32px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">Findings (13 total)</h2>
+  
+    <div style="margin-top:24px;">
+      <h3 style="color:#dc2626; border-bottom:2px solid #dc2626; padding-bottom:6px;">CRITICAL (1)</h3>
+      
+    <div style="border-left:4px solid #dc2626; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#dc2626; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">CRITICAL</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-1</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Bucket web-assets-01 allows anonymous public read (wildcard principal)</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>arn:aws:s3:::web-assets-03</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">Bucket web-assets-03 has a bucket web-assets-01 granting s3:GetObject to Principal '*' on arn:aws:s3:::web-assets-03/*, meaning every object in the bucket is publicly downloadable by any unauthenticated user on the internet. Public access block is also not fully enabled, so the web-assets-01 is enforced. The bucket web-assets-04 ~43.66 GB of mainnet snapshot web-assets-27 and contributes ~$1.05/month in web-assets-02 cost. While the web-assets-27 may be intentionally public (snapshots), the wildcard-principal pattern is the leading cause of unintended large-scale web-assets-27 exposure and any operator writing the wrong file here will instantly leak it. There is no rate limiting, no logging differentiation, and any web-assets-27 added to this prefix becomes immediately world-readable.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Confirm whether public distribution is required. If yes, place the bucket web-assets-05 a CloudFront distribution web-assets-34 Origin Access Control, restrict the bucket web-assets-01 to that distribution only, and enable all four S3 Public Access Block settings except where they would block the intended distribution. If only specific prefixes (such as a 'public/' folder) need to be public, scope the Resource in the web-assets-01 to that prefix instead of '/*'. Additionally enable S3 server access logging and consider Object Lock to prevent tampering of published snapshots.
+      </div>
+    </div>
+    </div>
+    <div style="margin-top:24px;">
+      <h3 style="color:#ea580c; border-bottom:2px solid #ea580c; padding-bottom:6px;">HIGH (6)</h3>
+      
+    <div style="border-left:4px solid #ea580c; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ea580c; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">HIGH</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-2</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Database/secret backup buckets lack full public access block</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>arn:aws:s3:::web-assets-06, arn:aws:s3:::web-assets-07</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">Buckets web-assets-06 and web-assets-07 (both eu-west-1) hold sensitive web-assets-27base secret backup material and are encrypted web-assets-34 SSE-S3 (AES256), but do not have all four S3 Public Access Block settings enabled. Although no public bucket web-assets-01 is currently attached, this configuration would permit a future bucket web-assets-01 or ACL change to expose secrets publicly web-assets-34out an additional protective layer.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Enable all four S3 Public Access Block settings (BlockPublicAcls, IgnorePublicAcls, BlockPublicPolicy, RestrictPublicBuckets) at the bucket web-assets-08 and ideally at the account web-assets-08. Upgrade encryption from SSE-S3 to SSE-KMS web-assets-34 a customer-managed KMS key whose key web-assets-01 is restricted to the principals that must read these secret backups, enable Bucket web-assets-09 for cost efficiency, and turn on object versioning plus MFA delete for tamper resistance.
+      </div>
+    </div>
+    <div style="border-left:4px solid #ea580c; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ea580c; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">HIGH</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-3</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Vault, IaC state, and RDS export buckets are web-assets-39 and not blocking public access</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>arn:aws:s3:::web-assets-10, arn:aws:s3:::web-assets-11, arn:aws:s3:::web-assets-12, arn:aws:s3:::web-assets-13, arn:aws:s3:::web-assets-14, arn:aws:s3:::web-assets-15, arn:aws:s3:::web-assets-16, arn:aws:s3:::web-assets-17</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">Highly sensitive operational buckets in eu-west-2 — web-assets-10 (HashiCorp Vault snapshots), web-assets-11 (Terraform state for EKS), web-assets-12 (RDS export dumps), web-assets-13, web-assets-14, web-assets-15, web-assets-16, and web-assets-17 (us-east-1) — all have NO server-side encryption and do NOT fully block public access. Vault backups and Terraform state typically contain unsealed secrets, IAM credentials, and infrastructure topology that would be highly valuable to an attacker.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Enable default SSE-KMS encryption on each bucket web-assets-18 a customer-managed KMS key web-assets-34 least-privilege key web-assets-01. Enable all four S3 Public Access Block settings. Enable object versioning and MFA delete. For Terraform state, additionally enable DynamoDB-backed state locking. Verify no current consumers rely on public access before tightening.
+      </div>
+    </div>
+    <div style="border-left:4px solid #ea580c; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ea580c; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">HIGH</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-4</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Audit/log destination buckets web-assets-39 and not blocking public access</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>arn:aws:s3:::web-assets-19, arn:aws:s3:::web-assets-20, arn:aws:s3:::web-assets-21, arn:aws:s3:::web-assets-22, arn:aws:s3:::web-assets-23, arn:aws:s3:::web-assets-24, arn:aws:s3:::web-assets-25, arn:aws:s3:::web-assets-26</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">Buckets used to store audit and operational logs in eu-west-2 — web-assets-19, awsconfig-bucket-111-01-eu-west-2, aws-athena-query-results-111-01-eu-west-2, web-assets-22, web-assets-23, web-assets-24, web-assets-25, web-assets-26 — are web-assets-39 and not fully blocking public access. Log buckets are routinely targeted by attackers because they may leak IP topology, request bodies, IAM principals, query strings (including tokens), and Config snapshots.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Enable default SSE-S3 or SSE-KMS encryption on all log destination buckets. Enable all four Public Access Block settings. Add a bucket web-assets-01 denying any non-TLS (aws:SecureTransport=false) request. Apply S3 Lifecycle rules to transition older log objects to Glacier Instant Retrieval after 30–90 days and expire after retention web-assets-01 completion to control growth.
+      </div>
+    </div>
+    <div style="border-left:4px solid #ea580c; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ea580c; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">HIGH</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-5</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Public-fronted static-site / dApp buckets web-assets-39</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>arn:aws:s3:::web-assets-28, arn:aws:s3:::web-assets-29, arn:aws:s3:::web-assets-30, arn:aws:s3:::web-assets-31, arn:aws:s3:::web-assets-32, arn:aws:s3:::web-assets-33</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">Static-content buckets in ap-southeast-1 — web-assets-28, web-assets-29, web-assets-30, web-assets-31, web-assets-32 — and web-assets-33 (eu-west-2) lack server-side encryption and do not fully block public access. While public read may be the intended hosting model, the absence of encryption means in-bucket web-assets-27 at rest is unprotected, and the lack of a deny-non-TLS web-assets-01 means clients may read via http.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Enable default SSE-S3 encryption (no extra cost, no client impact). Front each bucket web-assets-34 a CloudFront distribution web-assets-18 Origin Access Control, then set Public Access Block to ON and replace the public bucket web-assets-01 web-assets-34 one restricting access to the CloudFront OAC. Add a bucket web-assets-01 statement denying aws:SecureTransport=false.
+      </div>
+    </div>
+    <div style="border-left:4px solid #ea580c; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ea580c; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">HIGH</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-6</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Ledger snapshot bucket web-assets-35 Public Access Block</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>arn:aws:s3:::web-assets-03</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">Bucket web-assets-03 (eu-west-1) has a public bucket web-assets-01 web-assets-34 wildcard principal (see finding-1) and does NOT have S3 Public Access Block fully enabled. The combination means any ACL or web-assets-01 change at object/bucket web-assets-08 can immediately escalate exposure. Storage size ~43.66 GB, estimated cost $1.05/month.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> After moving distribution web-assets-05 CloudFront (see finding-1), enable all four Public Access Block settings. If certain objects must remain publicly downloadable directly from S3, leave only RestrictPublicBuckets and IgnorePublicAcls disabled and document the exception. Enable S3 server access logging and CloudTrail web-assets-27 events for this bucket.
+      </div>
+    </div>
+    <div style="border-left:4px solid #ea580c; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ea580c; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">HIGH</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-7</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Webapp/explorer buckets web-assets-34 bucket web-assets-36 but no Public Access Block</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>arn:aws:s3:::web-assets-37, arn:aws:s3:::web-assets-38</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">Buckets web-assets-37 and web-assets-38 (eu-west-1) are encrypted (AES256) and carry custom bucket web-assets-36, but do not fully block public access. Without Public Access Block, the bucket web-assets-01 is the sole control governing exposure; any erroneous web-assets-01 change would directly impact users.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Front these buckets via CloudFront web-assets-34 Origin Access Control, restrict bucket web-assets-01 to the OAC principal, and enable all four Public Access Block settings. Add an explicit deny statement for aws:SecureTransport=false.
+      </div>
+    </div>
+    </div>
+    <div style="margin-top:24px;">
+      <h3 style="color:#ca8a04; border-bottom:2px solid #ca8a04; padding-bottom:6px;">MEDIUM (3)</h3>
+      
+    <div style="border-left:4px solid #ca8a04; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ca8a04; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">MEDIUM</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-8</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Athena query results bucket (eu-west-2) web-assets-39 and exposed</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>arn:aws:s3:::web-assets-21</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">aws-athena-query-results-111-01-eu-west-2 web-assets-04 Athena query result CSVs/JSON which can include sensitive query output. It is web-assets-39 and not blocking public access. The equivalent eu-west-1 bucket is correctly configured.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Enable default SSE-S3 encryption and all four Public Access Block settings. Configure a Lifecycle rule to expire result objects after 30 days to control cost and reduce blast radius.
+      </div>
+    </div>
+    <div style="border-left:4px solid #ca8a04; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ca8a04; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">MEDIUM</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-9</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">CDK bootstrap assets bucket web-assets-39 in eu-west-2</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>arn:aws:s3:::web-assets-40</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">cdk-hnb659fds-assets-111-01-eu-west-2 stores CDK staging assets (Lambda zips, CloudFormation templates) and is web-assets-39 web-assets-34 public access not fully blocked. CDK normally provisions this bucket web-assets-34 KMS encryption and full Public Access Block, so the configuration drift is suspicious and increases risk that build artefacts (including embedded secrets) could be exposed.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Re-bootstrap the CDK environment (cdk bootstrap) in eu-west-2 web-assets-18 the modern template which sets SSE-KMS and full Public Access Block, or manually enable SSE encryption and Public Access Block on the existing bucket.
+      </div>
+    </div>
+    <div style="border-left:4px solid #ca8a04; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#ca8a04; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">MEDIUM</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-10</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Babylon stokenet genesis bucket web-assets-39</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>arn:aws:s3:::web-assets-41</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">web-assets-41 (eu-west-2) is web-assets-39 and not blocking public access. Even if the genesis ledger material is intended to be public, default-at-rest encryption should be enabled.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Enable default SSE-S3 encryption and Public Access Block. If the bucket web-assets-42 to publish content, do so via a CloudFront distribution web-assets-34 Origin Access Control.
+      </div>
+    </div>
+    </div>
+    <div style="margin-top:24px;">
+      <h3 style="color:#2563eb; border-bottom:2px solid #2563eb; padding-bottom:6px;">LOW (2)</h3>
+      
+    <div style="border-left:4px solid #2563eb; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#2563eb; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">LOW</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-11</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Session Manager log bucket web-assets-35 Public Access Block</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>arn:aws:s3:::web-assets-43</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">web-assets-43 (eu-west-1) is encrypted but does not fully block public access. Session Manager logs can include command transcripts; their unintended exposure would reveal operator activity.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Enable all four Public Access Block settings. Add a bucket web-assets-01 denying aws:SecureTransport=false. Apply a Lifecycle rule to expire logs after the required retention window.
+      </div>
+    </div>
+    <div style="border-left:4px solid #2563eb; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#2563eb; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">LOW</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-12</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Temporary SSM/Ansible files bucket web-assets-35 Public Access Block</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>arn:aws:s3:::web-assets-44</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">web-assets-44 (eu-west-1) is encrypted but does not fully block public access. Buckets that receive ephemeral SSM/Jenkins artefacts can briefly contain credentials in transit.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Enable all four Public Access Block settings. Add a Lifecycle rule expiring objects after 1–7 days, and add a bucket web-assets-01 denying aws:SecureTransport=false.
+      </div>
+    </div>
+    </div>
+    <div style="margin-top:24px;">
+      <h3 style="color:#6b7280; border-bottom:2px solid #6b7280; padding-bottom:6px;">INFO (1)</h3>
+      
+    <div style="border-left:4px solid #6b7280; padding:12px 16px; margin-bottom:12px; background:#fafafa; border-radius:0 6px 6px 0;">
+      <div style="margin-bottom:4px;">
+        <span style="background:#6b7280; color:#fff; padding:2px 8px; border-radius:3px; font-size:12px; font-weight:600;">INFO</span>
+        <span style="color:#6b7280; font-size:13px; margin-left:8px;">FINDING-13</span>
+      </div>
+      <div style="font-weight:600; font-size:15px; margin-bottom:4px;">Ledger backup buckets dominate web-assets-02 cost — Glacier tiering opportunity</div>
+      <div style="font-size:13px; color:#6b7280; margin-bottom:8px;">Resource: <code>arn:aws:s3:::web-assets-45, arn:aws:s3:::web-assets-46</code></div>
+      <div style="font-size:14px; margin-bottom:8px;">web-assets-45 (~9.86 TB Standard-IA, $129.21/month) and web-assets-46 (~3.90 TB Standard-IA, $51.05/month) together account for ~98% of estimated S3 web-assets-02 spend. These are backup web-assets-27sets that are unlikely to require sub-second retrieval. Migrating cold portions to Glacier Instant Retrieval would save roughly 40–50%, while Glacier Flexible Retrieval or Deep Archive would save 70–95% depending on access pattern.</div>
+      <div style="font-size:14px; background:#f0fdf4; padding:8px 12px; border-radius:4px; border-left:3px solid #16a34a;">
+        <strong>Recommendation:</strong> Review the retrieval SLA required for these backups. Add S3 Lifecycle rules to transition objects older than 30 days to Glacier Instant Retrieval, older than 90 days to Glacier Flexible Retrieval, and older than 180 days to Glacier Deep Archive where retrieval-time SLA allows. Also enable S3 Storage Lens to track per-prefix usage and confirm there are no orphaned multipart uploads or non-current versions inflating cost — add a Lifecycle rule to abort incomplete multipart uploads after 7 days and expire non-current versions after the required retention window. Estimated monthly saving: $70–$140.
+      </div>
+    </div>
+    </div>
+
+  
+  <div style="margin-top:32px; padding:12px 16px; background:#f8fafc; border-top:1px solid #e2e8f0; font-size:13px; color:#64748b;">
+    Cost: $0.3087 &middot; Duration: 97.5s &middot; Turns: 5 &middot; Tokens: 2,972 in / 6,769 out
+  </div>
+
+  <div style="margin-top:24px; text-align:center; font-size:12px; color:#94a3b8;">
+    Generated by <a href="https://github.com/trellisclad/cloud-audit-agent" style="color:#64748b;">cloud-audit-agent</a>
+  </div>
+</body>
+</html>
